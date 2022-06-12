@@ -21,8 +21,8 @@ let popupInputName = popupInput[0];
 let popupInputAboutOneself = popupInput[1];
 
 function openPopup() {
-    if (popup.className === 'popup popup__opened') {
-        popup.classList.remove('popup__opened');
+    if (popup.className === 'popup popup_opened') {
+        popup.classList.remove('popup_opened');
         popupInputName.setAttribute('placeholder', profileName.textContent);
         popupInputAboutOneself.setAttribute('placeholder', profileAboutOneself.textContent);
         popupInputName.value = '';
@@ -37,7 +37,7 @@ let popupCloseButton = document.querySelector('.popup__close-button');
 
 function closePopup(evt) {
     if (popup.className === 'popup') {
-        popup.classList.add('popup__opened');
+        popup.classList.add('popup_opened');
     } 
 }
 
