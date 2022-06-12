@@ -8,4 +8,4 @@
 * Отслеживание событий, вызванных пользователем.
 * Создание формы для получения информации от пользователя, отслеживание события отправки формы — submit.
 
-Ссылка на проект на GitHub Pages: https://berezinamariya.github.io/russian-travel/index.html
+Ссылка на проект на GitHub Pages: https://berezinamariya.github.io/mesto/
