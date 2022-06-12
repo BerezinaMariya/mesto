@@ -1,0 +1,9 @@
+.profile__avatar {
+    width: 120px;
+    min-width: 120px;
+    height: 120px;
+    /*background-image: url(https://code.s3.yandex.net/web-code/dom/cover.jpg);*/
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+}
