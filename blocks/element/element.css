@@ -1,6 +1,6 @@
 .element {
     width: 282px;
-    height: 361px;
+    min-height: 361px;
     display: grid;
     grid-template-columns: 1fr 44px;
     grid-template-rows: 282px 1fr;

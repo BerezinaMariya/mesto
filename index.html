@@ -6,68 +6,68 @@
     <link rel="stylesheet" href="pages/index.css">
     <title>Mesto</title>
   </head>
-  <body>
-    <div class="page"> 
-      <header class="header">
-        <img class="header__logo" src="images/header-logo.svg" alt="Логотип">
-      </header>
-      <main class="content">
-        <section class="profile">
-          <div class="profile__personal-data">
-            <img class="profile__avatar" src="images/profile-kusto.jpg" alt="Жак-Ив Кусто">
-            <div class="profile__info">
-              <h1 class="profile__name">Жак-Ив Кусто</h1>
-              <p class="profile__about-oneself">Исследователь океана</p>
-              <button class="profile__edit-button"></button>
-            </div>
+  <body class="page">
+    <header class="header">
+      <img class="header__logo" src="images/header-logo.svg" alt="Логотип проекта Место">
+    </header>
+    <main class="content">
+      <section class="profile">
+        <div class="profile__personal-data">
+          <img class="profile__avatar" src="images/profile-kusto.jpg" alt="Исследователь Жак-Ив Кусто">
+          <div class="profile__info">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <p class="profile__about-oneself">Исследователь океана</p>
+            <button type="button" class="profile__edit-button"></button>
           </div>
-          <button class="profile__add-button"></button>
-        </section>
-        <section>
-          <ul class="elements">
-            <li class="element">
-              <img class="element__mask-group" src="images/element-karachaevsk.jpg" alt="Карачаевск">
-              <h2 class="element__title">Карачаевск</h2>
-              <img class="element__group" src="images/element-group.svg" alt="Лайк">
-            </li>
-            <li class="element">
-              <img class="element__mask-group" src="images/element-elbrus.jpg" alt="Эльбрус">
-              <h2 class="element__title">Гора Эльбрус</h2>
-              <img class="element__group" src="images/element-group.svg" alt="Лайк">
-            </li>
-            <li class="element">
-              <img class="element__mask-group" src="images/element-donbay.jpg" alt="Домбай">
-              <h2 class="element__title">Домбай</h2>
-              <img class="element__group" src="images/element-group.svg" alt="Лайк">
-            </li>
-            <li class="element">
-              <img class="element__mask-group" src="images/element-kamchatka.jpg" alt="Камчатка">
-              <h2 class="element__title">Камчатка</h2>
-              <img class="element__group" src="images/element-group.svg" alt="Лайк">
-            </li>
-            <li class="element">
-              <img class="element__mask-group" src="images/element-poperechnaya-mountain.jpg" alt="Поперечная">
-              <h2 class="element__title">Гора Поперечная</h2>
-              <img class="element__group" src="images/element-group.svg" alt="Лайк">
-            </li>
-            <li class="element">
-              <img class="element__mask-group" src="images/element-sochi.jpg" alt="Сочи">
-              <h2 class="element__title">Сочи</h2>
-              <img class="element__group" src="images/element-group.svg" alt="Лайк">
-            </li>
-          </ul>
-        </section>
-      </main>
-      <footer class="footer">
-        <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
-      </footer>
-      <div class="popup popup_opened">
-        <form class="popup__container">
-          <button type="button" class="popup__close-button"></button>
-          <h3 class="popup__title">Редактировать профиль</h3>
-          <input type="text" class="popup__input">
-          <input type="text" class="popup__input">
-          <button class="popup__submit-button">Сохранить</button>
+        </div>
+        <button type="button" class="profile__add-button"></button>
+      </section>
+      <section>
+        <ul class="elements">
+          <li class="element">
+            <img class="element__mask-group" src="images/element-karachaevsk.jpg" alt="Сентинский храм, Карачаевский район, Село Нижняя Теберда">
+            <h2 class="element__title">Карачаевск</h2>
+            <button type="button" class="element__group"></button>
+          </li>
+          <li class="element">
+            <img class="element__mask-group" src="images/element-elbrus.jpg" alt="Гора Эльбрус, Кавказ">
+            <h2 class="element__title">Гора Эльбрус</h2>
+            <button type="button" class="element__group"></button>
+          </li>
+          <li class="element">
+            <img class="element__mask-group" src="images/element-donbay.jpg" alt="Гора Пик Инэ, Домбай">
+            <h2 class="element__title">Домбай</h2>
+            <button type="button" class="element__group"></button>
+          </li>
+          <li class="element">
+            <img class="element__mask-group" src="images/element-kamchatka.jpg" alt="Гора Верблюд, Камчатка">
+            <h2 class="element__title">Камчатка</h2>
+            <button type="button" class="element__group"></button>
+          </li>
+          <li class="element">
+            <img class="element__mask-group" src="images/element-poperechnaya-mountain.jpg" alt="Гора Поперечная, Урал">
+            <h2 class="element__title">Гора Поперечная</h2>
+            <button type="button" class="element__group"></button>
+          </li>
+          <li class="element">
+            <img class="element__mask-group" src="images/element-aigba.jpg" alt="Хребет Аигба, Сочи">
+            <h2 class="element__title">Хребет Аигба</h2>
+            <button type="button" class="element__group"></button>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+    </footer>
+    <div class="popup">
+      <div class="popup__container">
+        <button type="button" class="popup__close-button"></button>
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form name="edit-form">
+          <input type="text" name="input-name" class="popup__input popup__input_data_name">
+          <input type="text" name="input-about-oneself" class="popup__input popup__input_data_about-oneself">
+          <button type="submit" class="popup__submit-button">Сохранить</button>
         </form>
       </div>
     </div>
