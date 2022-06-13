@@ -1,14 +1,7 @@
 .element {
     width: 282px;
-    min-height: 361px;
-    display: grid;
-    grid-template-columns: 1fr 44px;
-    grid-template-rows: 282px 1fr;
-    grid-template-areas: 
-      "element__mask-group element__mask-group"
-      "element__title element__group";
-    gap: 0 20px;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     background: #FFFFFF;
     border-radius: 10px;
 }

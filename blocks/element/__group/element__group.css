@@ -1,11 +1,9 @@
 .element__group {
-    grid-area: element__group;
     background-image: url(../../../images/element-group.svg);
     background-color: rgba(255,255,255,0);
     border: none;
     width: 22px;
     height: 19px;
-    margin-right: 20px;
     cursor: pointer;
 }
 
