@@ -18,7 +18,10 @@ const addForm = popupAdd.querySelector('.add-form');
 let popupInputTitle = popupAdd.querySelector('.popup__input_data_title');
 let popupInputImage = popupAdd.querySelector('.popup__input_data_image');
 
-const deleteButton = document.querySelectorAll('.element__delete-button');
+const popupPreview = document.querySelector('.popup_action_image-preview');
+const popupPreviewCloseButton = popupPreview.querySelector('.popup__close-button');
+let popupPreviewTitle = popupPreview.querySelector('.popup__preview-title');
+let popupImagePreview = popupPreview.querySelector('.popup__image-preview');
 
 //Массив из 6 карточек при загрузке
 const elementsInitialCards = [
@@ -53,18 +56,59 @@ elementsInitialCards.forEach(function (element) {
   const cardElement = elementTemplate.cloneNode(true);
 
   cardElement.querySelector('.element__title').textContent = element.name;
-  cardElement.querySelector('.element__mask-group').src = element.link;
+  cardElement.querySelector('.element__image').src = element.link;
 
-  cardElement.querySelector('.element__group').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__group_active');
-  });
-
-  cardElement.querySelector('.element__delete-button').addEventListener('click', function (evt) {
-    evt.target.closest('.element').remove();
-  });
+  likeCard(cardElement);
+  deleteCard(cardElement);
+  openPreviewCard(cardElement);
 
   elements.append(cardElement);
 });
+
+//Функция редактирования данных в popupAdd для закрытия по кнопке Создать
+function submitAddPopup() {
+  const cardElement = elementTemplate.cloneNode(true);
+
+  cardElement.querySelector('.element__title').textContent = popupInputTitle.value;
+  cardElement.querySelector('.element__image').src = popupInputImage.value;
+
+  popupInputTitle.value = '';
+  popupInputImage.value = '';
+
+  likeCard(cardElement);
+  deleteCard(cardElement);
+  openPreviewCard(cardElement);
+
+  elements.prepend(cardElement);
+}
+
+//Функция like карточки
+function likeCard(cardElement) { 
+  cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
+  evt.target.classList.toggle('element__like_active');
+  });
+}
+
+//Функция удаления карточки
+function deleteCard(cardElement) {
+  cardElement.querySelector('.element__delete-button').addEventListener('click', function (evt) {
+  evt.target.closest('.element').remove();
+  });
+}
+
+//Функция открытия popupPreview картинки карточки
+function openPreviewCard(cardElement) {
+  const elementImage = cardElement.querySelector('.element__image');
+  const elementTitle = cardElement.querySelector('.element__title');
+  
+  elementImage.addEventListener('click', function() {
+    openPopup(popupPreview);
+       
+    popupPreviewTitle.textContent = elementTitle.textContent;
+  
+    popupImagePreview.src = elementImage.src;
+  });
+}
 
 //Функция открытия popup
 function openPopup(popupElement) {
@@ -92,21 +136,6 @@ function submitEditPopup() {
     profileAboutOneself.textContent = popupInputAboutOneself.value;
     }
 }
-
-//Функция редактирования данных в popupAdd для закрытия по кнопке Создать
-function submitAddPopup() {
-  const cardElement = elementTemplate.cloneNode(true);
-
-  cardElement.querySelector('.element__title').textContent = popupInputTitle.value;
-  cardElement.querySelector('.element__mask-group').src = popupInputImage.value;
-
-  elements.prepend(cardElement);
-}
-
-//Функция удаления карточки
-function cardDelete(evt) {
-  evt.target.closest('.element').remove();
-} 
 
 // Слушатели событий
 
@@ -145,12 +174,7 @@ addForm.addEventListener('submit', function (evt) {
   closePopup(popupAdd);
 });
 
-//удаление карточки по кнопке trash
-//elementDeleteButton.addEventListener('submit', function() {
- // const elementDeleteButton = document.querySelector('.element__delete-button');
-//  cardDelete(elementDeleteButton);
-//});
-
-document.querySelector('.element__delete-button').addEventListener('click', function() {
-  document.querySelector('.element__delete-button').target.closest('.element');
+//закрытие popupPreview по крестику
+popupPreviewCloseButton.addEventListener('click', function() {
+  closePopup(popupPreview);
 });
