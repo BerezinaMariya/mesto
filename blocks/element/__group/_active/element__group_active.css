@@ -1,0 +1,6 @@
+.element__group_active {
+    opacity: 1;
+    background-image: url(../../../../images/element-group-fill.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}

@@ -14,7 +14,11 @@ let popupInputAboutOneself = popupEdit.querySelector('.popup__input_data_about-o
 
 const popupAdd = document.querySelector('.popup_action_add');
 const popupAddCloseButton = popupAdd.querySelector('.popup__close-button');
-const AddForm = popupAdd.querySelector('.add-form');
+const addForm = popupAdd.querySelector('.add-form');
+let popupInputTitle = popupAdd.querySelector('.popup__input_data_title');
+let popupInputImage = popupAdd.querySelector('.popup__input_data_image');
+
+const deleteButton = document.querySelectorAll('.element__delete-button');
 
 //Массив из 6 карточек при загрузке
 const elementsInitialCards = [
@@ -51,9 +55,16 @@ elementsInitialCards.forEach(function (element) {
   cardElement.querySelector('.element__title').textContent = element.name;
   cardElement.querySelector('.element__mask-group').src = element.link;
 
-  elements.append(cardElement)
-});
+  cardElement.querySelector('.element__group').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__group_active');
+  });
 
+  cardElement.querySelector('.element__delete-button').addEventListener('click', function (evt) {
+    evt.target.closest('.element').remove();
+  });
+
+  elements.append(cardElement);
+});
 
 //Функция открытия popup
 function openPopup(popupElement) {
@@ -66,7 +77,7 @@ function closePopup(popupElement) {
 }
 
 //Функция заполнения полей при открытии popupEdit
-function openPopupEdit () {
+function openEditPopup() {
   popupInputName.value = profileName.textContent;
   popupInputAboutOneself.value = profileAboutOneself.textContent;
 }
@@ -82,32 +93,64 @@ function submitEditPopup() {
     }
 }
 
+//Функция редактирования данных в popupAdd для закрытия по кнопке Создать
+function submitAddPopup() {
+  const cardElement = elementTemplate.cloneNode(true);
+
+  cardElement.querySelector('.element__title').textContent = popupInputTitle.value;
+  cardElement.querySelector('.element__mask-group').src = popupInputImage.value;
+
+  elements.prepend(cardElement);
+}
+
+//Функция удаления карточки
+function cardDelete(evt) {
+  evt.target.closest('.element').remove();
+} 
+
 // Слушатели событий
 
 //открытие popupEdit
-profileEditButton.addEventListener('click', function () {
+profileEditButton.addEventListener('click', function() {
   openPopup(popupEdit);
-  openPopupEdit ();
+  openEditPopup ();
 });
 
 //закрытие popupEdit по крестику без сохранения
-popupEditCloseButton.addEventListener('click', function () {
+popupEditCloseButton.addEventListener('click', function() {
   closePopup(popupEdit);
 });
 
 //закрытие popupEdit по кнопке Сохранить
 editForm.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  submitPopup ();
+  submitEditPopup();
   closePopup(popupEdit);
 });
 
 //открытие popupAdd
-profileAddButton.addEventListener('click', function () {
+profileAddButton.addEventListener('click', function() {
   openPopup(popupAdd);
 });
 
 //закрытие popupAdd по крестику без сохранения
-popupAddCloseButton.addEventListener('click', function () {
+popupAddCloseButton.addEventListener('click', function() {
   closePopup(popupAdd);
+});
+
+//закрытие popupAdd по кнопке Создать
+addForm.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+  submitAddPopup();
+  closePopup(popupAdd);
+});
+
+//удаление карточки по кнопке trash
+//elementDeleteButton.addEventListener('submit', function() {
+ // const elementDeleteButton = document.querySelector('.element__delete-button');
+//  cardDelete(elementDeleteButton);
+//});
+
+document.querySelector('.element__delete-button').addEventListener('click', function() {
+  document.querySelector('.element__delete-button').target.closest('.element');
 });
