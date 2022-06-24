@@ -24,65 +24,47 @@
       </section>
       <section>
         <ul class="elements">
-          <li class="element">
-            <img class="element__mask-group" src="images/element-karachaevsk.jpg" alt="Сентинский храм, Карачаевский район, Село Нижняя Теберда">
-            <div class="element__caption">
-              <h2 class="element__title">Карачаевск</h2>
-              <button type="button" class="element__group"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__mask-group" src="images/element-elbrus.jpg" alt="Гора Эльбрус, Кавказ">
-            <div class="element__caption">
-              <h2 class="element__title">Гора Эльбрус</h2>
-              <button type="button" class="element__group"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__mask-group" src="images/element-donbay.jpg" alt="Гора Пик Инэ, Домбай">
-            <div class="element__caption">
-              <h2 class="element__title">Домбай</h2>
-              <button type="button" class="element__group"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__mask-group" src="images/element-kamchatka.jpg" alt="Гора Верблюд, Камчатка">
-            <div class="element__caption">
-              <h2 class="element__title">Камчатка</h2>
-              <button type="button" class="element__group"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__mask-group" src="images/element-poperechnaya-mountain.jpg" alt="Гора Поперечная, Урал">
-            <div class="element__caption">
-              <h2 class="element__title">Гора Поперечная</h2>
-              <button type="button" class="element__group"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__mask-group" src="images/element-aigba.jpg" alt="Хребет Аигба, Сочи">
-            <div class="element__caption">
-              <h2 class="element__title">Хребет Аигба</h2>
-              <button type="button" class="element__group"></button>
-            </div>
-          </li>
+
         </ul>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup popup_action_edit">
       <div class="popup__container">
         <button type="button" class="popup__close-button"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form name="edit-form">
+        <form name="edit-form" class="edit-form">
           <input type="text" name="input-name" class="popup__input popup__input_data_name">
           <input type="text" name="input-about-oneself" class="popup__input popup__input_data_about-oneself">
           <button type="submit" class="popup__submit-button">Сохранить</button>
         </form>
       </div>
     </div>
+    <div class="popup popup_action_add">
+      <div class="popup__container">
+        <button type="button" class="popup__close-button"></button>
+        <h3 class="popup__title">Новое место</h3>
+        <form name="add-form">
+          <input type="text" name="input-title" placeholder="Название" class="popup__input popup__input_data_title">
+          <input type="text" name="input-image" placeholder="Ссылка на картинку" class="popup__input popup__input_data_image">
+          <button type="submit" class="popup__submit-button">Создать</button>
+        </form>
+      </div>
+    </div>
+    <template class="element-template">
+      <li class="element">
+        <img class="element__mask-group">
+        <div class="element__caption">
+          <h2 class="element__title">
+            
+          </h2>
+          <button type="button" class="element__group"></button>
+        </div>
+        <button type="button" class="element__trash-button"></button>
+      </li>
+    </template>
   <script src="scripts/index.js"></script>
   </body>
 </html>
