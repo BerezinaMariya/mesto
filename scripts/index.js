@@ -80,6 +80,7 @@ function createCard (titleValue, imageSrcValue) {
 
   cardElement.querySelector('.element__title').textContent = titleValue;
   cardElement.querySelector('.element__image').src = imageSrcValue;
+  cardElement.querySelector('.element__image').alt = titleValue;
 
   addEventListenerCardLikeButton(cardElement);
   addEventListenerCardDeleteButton(cardElement);
