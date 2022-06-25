@@ -1,4 +1,4 @@
-.element__like {
+.element__like-button {
     background-image: url(../../../images/element-group.svg);
     background-color: rgba(255,255,255,0);
     border: none;
@@ -7,10 +7,10 @@
     cursor: pointer;
 }
 
-.element__like:hover {
+.element__like-button:hover {
     opacity: 0.5;
 }
 
-.element__like:active {
+.element__like-button:active {
     background-image: url(../../../images/element-group-fill.svg);
 }

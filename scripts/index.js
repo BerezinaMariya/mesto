@@ -1,55 +1,26 @@
 const elements = document.querySelector('.elements');
-const elementTemplate = document.querySelector('.element-template').content;
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
-let profileName = document.querySelector('.profile__name');
-let profileAboutOneself = document.querySelector('.profile__about-oneself');
+const profileName = document.querySelector('.profile__name');
+const profileAboutOneself = document.querySelector('.profile__about-oneself');
 
 const popupEdit = document.querySelector('.popup_action_edit');
 const popupEditCloseButton = popupEdit.querySelector('.popup__close-button');
-const editForm = popupEdit.querySelector('.edit-form');
-let popupInputName = popupEdit.querySelector('.popup__input_data_name');
-let popupInputAboutOneself = popupEdit.querySelector('.popup__input_data_about-oneself');
+const formEdit = popupEdit.querySelector('.edit-form');
+const popupInputName = popupEdit.querySelector('.popup__input_data_name');
+const popupInputAboutOneself = popupEdit.querySelector('.popup__input_data_about-oneself');
 
 const popupAdd = document.querySelector('.popup_action_add');
 const popupAddCloseButton = popupAdd.querySelector('.popup__close-button');
-const addForm = popupAdd.querySelector('.add-form');
-let popupInputTitle = popupAdd.querySelector('.popup__input_data_title');
-let popupInputImage = popupAdd.querySelector('.popup__input_data_image');
+const formAdd = popupAdd.querySelector('.add-form');
+const popupInputTitle = popupAdd.querySelector('.popup__input_data_title');
+const popupInputImage = popupAdd.querySelector('.popup__input_data_image');
 
 const popupPreview = document.querySelector('.popup_action_image-preview');
 const popupPreviewCloseButton = popupPreview.querySelector('.popup__close-button');
-let popupPreviewTitle = popupPreview.querySelector('.popup__preview-title');
-let popupImagePreview = popupPreview.querySelector('.popup__image-preview');
-
-//Массив из 6 карточек при загрузке
-const elementsInitialCards = [
-  {
-    name: 'Большой Барьерный риф',
-    link: 'https://2.downloader.disk.yandex.ru/preview/7edb9fc547df0e0fc9df2336cec437d055fe3cd4dcfbbc50e14781a68dec27e9/inf/LQMg3y5x2f0v-xyI1y0kkrOcUoF2_aQX8jTpHLMGLU0nqHCuwDfnMc1tgq_zGu3pRFoY9yrdfWBoEnXJ2RzDhQ%3D%3D?uid=1581965923&filename=element-great-barrier-reef.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=1581965923&tknv=v2&size=1583x789'
-  },
-  {
-    name: 'Пролив Дрейка',
-    link: 'https://4.downloader.disk.yandex.ru/preview/b8e1686e8f9d17c1053913928309004cb1408ca49d5c1d329f972d06554ad82b/inf/MbFr9z1XebuxJqFm6iD4kydleWVDNZh4GfaXw972s0EtRQtbuXMIU8C_45Gpbf9RSlk_adH34QyYH9WOxLwi0A%3D%3D?uid=1581965923&filename=element-drake-passage.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=1581965923&tknv=v2&size=1583x789'
-  },
-  {
-    name: 'Атлантический океан',
-    link: 'https://downloader.disk.yandex.ru/preview/5321208fc5f5bd57c322fd94f3b1a9a40335c3d9c359734450c8985dc0327aea/62b5f257/JF1mkYNaZXjp3KFhYSny1idleWVDNZh4GfaXw972s0FO2m1bBzJ0AapYlQqWSdMto4vCAQHx6g6qbGX3ku-nVA%3D%3D?uid=0&filename=element-atlantic-ocean.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=0&tknv=v2&size=2048x2048'
-  },
-  {
-    name: 'Тихий океан',
-    link: 'https://2.downloader.disk.yandex.ru/preview/1fbc2c79c587a88a7090430ae62d6d587c46d84bda7e8d90abc9e5f2486de647/inf/X_E98VIg3ZhpnaNw2IK-p7OcUoF2_aQX8jTpHLMGLU3mpA2wAOKlvF116hAn7OVTLI2yPEagKH_K-9Rdcamcpw%3D%3D?uid=1581965923&filename=element-pacific-ocean.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=1581965923&tknv=v2&size=1583x789'
-  },
-  {
-    name: 'Гибралтарский пролив',
-    link: 'https://1.downloader.disk.yandex.ru/preview/352a25035b3a075fab5fd22ec060a80c3990e1cf9d3790ff5fb85ba24d7d3cc4/inf/XwMHAjaE8JzWyieJ6D9PCSdleWVDNZh4GfaXw972s0HkcuQ22tWaV4gJks39YYMxkBhNbxR8RH7Nv9xXzIBaLg%3D%3D?uid=1581965923&filename=element-gibraltar-strait.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=1581965923&tknv=v2&size=1583x789'
-  },
-  {
-    name: 'Средиземное море',
-    link: 'https://4.downloader.disk.yandex.ru/preview/d788ed4e2b391c3b347cac9783d90a1e51b5f3bf0c3b2d6e5185e32f3a7a7314/inf/x-6o8ElOFmL0_qgUaYBIhydleWVDNZh4GfaXw972s0HhA1KC7HfA1oYrSLmfwLSUGPYMpcn3pcNM9RswaKPvnw%3D%3D?uid=1581965923&filename=element-mediterranean-sea.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=1581965923&tknv=v2&size=1583x789'
-  }
-];
+const popupPreviewTitle = popupPreview.querySelector('.popup__preview-title');
+const popupImagePreview = popupPreview.querySelector('.popup__image-preview');
 
 //Функция открытия popup
 function openPopup(popupElement) {
@@ -62,38 +33,34 @@ function closePopup(popupElement) {
 }
 
 //Функция заполнения полей при открытии popupEdit
-function openEditPopup() {
+function inputEditPopup() {
   popupInputName.value = profileName.textContent;
   popupInputAboutOneself.value = profileAboutOneself.textContent;
 }
 
-//Функция редактирования данных в popupEdit для закрытия по кнопке Сохранить
+//Функция редактирования данных в popupEdit и закрытия по кнопке Сохранить
 function submitEditPopup() {
-    if (popupInputName.value.length !== 0) {
-    profileName.textContent = popupInputName.value;
-    }
-
-    if (popupInputAboutOneself.value.length !== 0) {
-    profileAboutOneself.textContent = popupInputAboutOneself.value;
-    }
+  profileName.textContent = popupInputName.value;
+  profileAboutOneself.textContent = popupInputAboutOneself.value;
+  closePopup(popupEdit);
 }
 
-//Функция like карточки
-function likeCard(cardElement) { 
-  cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
-  evt.target.classList.toggle('element__like_active');
+//Функция добавления слушателя кнопки like карточки
+function addEventListenerCardLikeButton(cardElement) { 
+  cardElement.querySelector('.element__like-button').addEventListener('click', function (cardElement) {
+    cardElement.target.classList.toggle('element__like-button_active');
   });
 }
 
-//Функция удаления карточки
-function deleteCard(cardElement) {
-  cardElement.querySelector('.element__delete-button').addEventListener('click', function (evt) {
-  evt.target.closest('.element').remove();
+//Функция добавления слушателя кнопки удаления карточки
+function addEventListenerCardDeleteButton(cardElement) {
+  cardElement.querySelector('.element__delete-button').addEventListener('click', function (cardElement) {
+  cardElement.target.closest('.element').remove();
   });
 }
 
-//Функция открытия popupPreview картинки карточки
-function openPreviewCard(cardElement) {
+//Функция добавления слушателя открытия popupPreview картинки карточки
+function addEventListenerOpenCardPreview(cardElement) {
   const elementImage = cardElement.querySelector('.element__image');
   const elementTitle = cardElement.querySelector('.element__title');
   
@@ -101,40 +68,41 @@ function openPreviewCard(cardElement) {
     openPopup(popupPreview);
        
     popupPreviewTitle.textContent = elementTitle.textContent;
-  
     popupImagePreview.src = elementImage.src;
+    popupImagePreview.alt = elementTitle.textContent;
   });
 }
 
-//Добавление карточек при открытии страницы
-elementsInitialCards.forEach(function (element) {
-  const cardElement = elementTemplate.cloneNode(true);
+//Функция создания и заполнения карточки, листенеры
+function createCard (titleValue, imageSrcValue) {
+  const elementTemplate = document.querySelector('#element').content;
+  const cardElement = elementTemplate.querySelector('.element').cloneNode(true);
 
-  cardElement.querySelector('.element__title').textContent = element.name;
-  cardElement.querySelector('.element__image').src = element.link;
+  cardElement.querySelector('.element__title').textContent = titleValue;
+  cardElement.querySelector('.element__image').src = imageSrcValue;
 
-  likeCard(cardElement);
-  deleteCard(cardElement);
-  openPreviewCard(cardElement);
+  addEventListenerCardLikeButton(cardElement);
+  addEventListenerCardDeleteButton(cardElement);
+  addEventListenerOpenCardPreview(cardElement);
+  
+  return cardElement;
+}
 
-  elements.append(cardElement);
+//Функция добавления карточки в разметку
+function renderCard (cardElement) {
+  elements.prepend(cardElement);
+}
+
+//Добавление карточек при открытии страницы из массива elementsInitialCards (из cards.js)
+elementsInitialCards.reverse().forEach(function (element) {
+  renderCard (createCard(element.name, element.link));
 });
 
-//Функция редактирования данных в popupAdd для закрытия по кнопке Создать
+//Функция редактирования данных в popupAdd и закрытия по кнопке Создать
 function submitAddPopup() {
-  const cardElement = elementTemplate.cloneNode(true);
-
-  cardElement.querySelector('.element__title').textContent = popupInputTitle.value;
-  cardElement.querySelector('.element__image').src = popupInputImage.value;
-
-  popupInputTitle.value = '';
-  popupInputImage.value = '';
-
-  likeCard(cardElement);
-  deleteCard(cardElement);
-  openPreviewCard(cardElement);
-
-  elements.prepend(cardElement);
+  renderCard (createCard (popupInputTitle.value, popupInputImage.value));
+  formAdd.reset();
+  closePopup(popupAdd);
 }
 
 // Слушатели событий
@@ -142,7 +110,7 @@ function submitAddPopup() {
 //открытие popupEdit
 profileEditButton.addEventListener('click', function() {
   openPopup(popupEdit);
-  openEditPopup ();
+  inputEditPopup ();
 });
 
 //закрытие popupEdit по крестику без сохранения
@@ -151,10 +119,9 @@ popupEditCloseButton.addEventListener('click', function() {
 });
 
 //закрытие popupEdit по кнопке Сохранить
-editForm.addEventListener('submit', function (evt) {
+formEdit.addEventListener('submit', function (evt) {
   evt.preventDefault();
   submitEditPopup();
-  closePopup(popupEdit);
 });
 
 //открытие popupAdd
@@ -168,10 +135,9 @@ popupAddCloseButton.addEventListener('click', function() {
 });
 
 //закрытие popupAdd по кнопке Создать
-addForm.addEventListener('submit', function (evt) {
+formAdd.addEventListener('submit', function (evt) {
   evt.preventDefault();
   submitAddPopup();
-  closePopup(popupAdd);
 });
 
 //закрытие popupPreview по крестику
