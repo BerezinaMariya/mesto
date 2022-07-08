@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pages/index.css">
     <script defer src="scripts/cards.js"></script>
+    <script defer src="scripts/validate.js"></script>
     <script defer src="scripts/index.js"></script>
     <title>Mesto</title>
   </head>
@@ -18,7 +19,7 @@
           <img class="profile__avatar" src="images/profile-kusto.jpg" alt="Исследователь Жак-Ив Кусто">
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <p class="profile__about-oneself">Исследователь океана</p>
+            <p class="profile__about-oneself" >Исследователь океана</p>
             <button type="button" class="profile__edit-button" aria-label="Редактировать данные"></button>
           </div>
         </div>
@@ -37,10 +38,12 @@
       <div class="popup__container">
         <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
         <h3 class="popup__title">Редактировать профиль</h3>
-        <form name="edit-form" class="edit-form">
-          <input type="text" name="input-name" required class="popup__input popup__input_data_name">
-          <input type="text" name="input-about-oneself" required class="popup__input popup__input_data_about-oneself">
-          <button type="submit" class="popup__submit-button">Сохранить</button>
+        <form name="form_action_edit" class="form form_action_edit" novalidate>
+          <input type="text" name="input-name" id="input-name" class="form__input form__input_data_name" required minlength="2" maxlength="40">
+          <span class="input-name-error form__input-error"></span>
+          <input type="text" name="input-about-oneself" id="input-about-oneself" class="form__input form__input_data_about-oneself" required minlength="2" maxlength="200">
+          <span class="input-about-oneself-error form__input-error"></span>
+          <button type="submit" class="form__submit-button">Сохранить</button>
         </form>
       </div>
     </div>
@@ -48,18 +51,20 @@
       <div class="popup__container">
         <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
         <h3 class="popup__title">Новое место</h3>
-        <form name="add-form" class="add-form">
-          <input type="text" name="input-title" placeholder="Название" class="popup__input popup__input_data_title">
-          <input type="url" name="input-image" placeholder="Ссылка на картинку" class="popup__input popup__input_data_image">
-          <button type="submit" class="popup__submit-button">Создать</button>
+        <form name="form_action_add" class="form form_action_add" novalidate>
+          <input type="text" name="input-image-title" id="input-image-title" placeholder="Название" class="form__input form__input_data_image-title" required minlength="2" maxlength="30">
+          <span class="input-image-title-error form__input-error"></span>
+          <input type="url" name="input-image-url" id="input-image-url" placeholder="Ссылка на картинку" class="form__input form__input_data_image-url" required>
+          <span class="input-image-url-error form__input-error"></span>
+          <button type="submit" class="form__submit-button">Создать</button>
         </form>
       </div>
     </div>
     <div class="popup popup_action_image-preview">
       <div class="popup__preview-container">
         <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
-        <img class="popup__image-preview" src="#" alt="Просмотр фотографии">
-        <h3 class="popup__preview-title">
+        <img class="popup__image-preview-url" src="#" alt="Просмотр фотографии">
+        <h3 class="popup__image-preview-title">
 
         </h3>
       </div>
