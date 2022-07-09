@@ -54,9 +54,9 @@ function fillEditPopupInput() {
 function submitEditPopup() {
   //Проверяем, есть ли класс popup_opened, чтобы не было повторных срабатываний при многократном нажатии (т.к. popup закрывается с задержкой 0.5s)
   if (popupEdit.classList.contains('popup_opened')) {
-  closePopup();
-  profileName.textContent = formInputName.value;
-  profileAboutOneself.textContent = formInputAboutOneself.value;
+    closePopup();
+    profileName.textContent = formInputName.value;
+    profileAboutOneself.textContent = formInputAboutOneself.value;
   }
 }
 
@@ -141,9 +141,12 @@ function toggleButtonStateInactive (popup) {
   const inputList = Array.from(popup.querySelectorAll('.form__input'));
 
   inputList.forEach((inputElement) => {
-    if (inputElement.textContent === '') {
+    if (inputElement.value === '') {
       submitButton.classList.add('form__submit-button_inactive');
       submitButton.setAttribute('disabled', true);
+    } else {
+      submitButton.classList.remove('form__submit-button_inactive');
+      submitButton.removeAttribute('disabled');
     }
   });
 }
@@ -184,6 +187,7 @@ profileEditButton.addEventListener('click', function() {
   openPopup(popupEdit);
   resetValidationFields(formEdit);
   fillEditPopupInput();
+  toggleButtonStateInactive(popupEdit);
 });
 
 //Добавили слушателя для открытия popupAdd
