@@ -23,51 +23,39 @@ const popupImagePreviewUrl = popupPreview.querySelector('.popup__image-preview-u
 //Функция открытия popup
 function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
-  //Добавляем слушателя нажатия кнопки Esc
-  addEscapeKeydownListener ();
-  //Добавляем слушателя нажатия оверлея
-  addPopupOverlayClickListener ();
-  //Добавляем слушателя нажатия кнопки closeButton (крестика)
-  addPopupCloseButtonClickListener ();
+  //Добавляем слушателя закрывания popup по кнопке Esc
+  document.addEventListener('keydown', closePopupByEsc);
+  //Добавляем слушателя закрывания popup по крестику и overlay
+  popupElement.addEventListener('mousedown', сlosePopupByCloseButtonAndPopupOverlay);
 }
 
 //Функция закрытия popup
 function closePopup() {
   const popupOpened = document.querySelector('.popup_opened');
   popupOpened.classList.remove('popup_opened');
-}
-
-//Функция добавления слушателя нажатия кнопки popupCloseButton для закрытия popup
-function addPopupCloseButtonClickListener () {
-  const popupOpened = document.querySelector('.popup_opened');
-  const popupCloseButton = popupOpened.querySelector('.popup__close-button');
-
-  popupCloseButton.addEventListener('click', closePopup);
+  //Удаляем слушателя события закрывания popup по кнопке Esc
+  document.removeEventListener('keydown', closePopupByEsc);
+  //Удаляем слушателя закрывания popup по крестику и overlay
+  popupOpened.removeEventListener('mousedown', сlosePopupByCloseButtonAndPopupOverlay);
 }
 
 //Функция закрытия popup при нажатии на Esc
-function keyEscHandler (evt) {
+function closePopupByEsc (evt) {
   if (evt.key === 'Escape') {
     closePopup();
   }
 }
 
-//Функция добавления слушателя Esc для закрытия popup
-function addEscapeKeydownListener () {
-  document.addEventListener('keydown', keyEscHandler)
-}
-
-//Функция закрытия popup по клику на оверлей
-function clickOverlayHandler (evt) {
-  if (evt.target === evt.currentTarget) {
+//Функция закрытия popup по нажатию на крестик или оверлей
+function сlosePopupByCloseButtonAndPopupOverlay (evt) {
+    //Закрытие по крестику
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup();
+    }
+    //Закрытие по overlay
+  if (evt.target.classList.contains('popup_opened')) {
     closePopup();
   }
-}
-
-//Функция добавления слушателя клика на оверлей для закрытия popup
-function addPopupOverlayClickListener () {
-  const popupOpened = document.querySelector('.popup_opened');
-  popupOpened.addEventListener('click', clickOverlayHandler)
 }
 
 //Функция заполнения полей при открытии popupEdit
@@ -77,10 +65,12 @@ function fillEditPopupInput() {
 }
 
 //Функция редактирования данных в popupEdit и закрытия по кнопке Сохранить
-function submitEditPopup() {
+function submitEditPopup(evt) {
+  evt.preventDefault();
   profileName.textContent = formInputName.value;
   profileAboutOneself.textContent = formInputAboutOneself.value;
   closePopup();
+  formEdit.removeEventListener('submit', submitEditPopup);
 }
 
 //Функция добавления слушателя кнопки like карточки
@@ -138,9 +128,11 @@ elementsInitialCards.reverse().forEach(function (element) {
 });
 
 //Функция редактирования данных в popupAdd и закрытия по кнопке Создать
-function submitAddPopup() {
+function submitAddPopup(evt) {
+  evt.preventDefault();
   renderCard (createCard (formInputTitle.value, formInputImage.value));
   closePopup();
+  formAdd.removeEventListener('submit', submitAddPopup);
 }
 
 //Функция очистки текста ошибки и выделения поля ошибки (подчеркивание) валидации (используем при открытии popup, т.к. при невалидных полях и закрытии НЕ по submit, при следующем открывании сохраняются текст ошибки и подчеркивание красным цветом)
@@ -155,32 +147,36 @@ function resetValidationFields (formElement) {
   });
 }
 
+//Функция деактивации кнопки submit-button формы (чтобы при открытии popup с НЕВАЛИДНЫМИ полями кнопка была неактивна)
+function toggleButtonStateInactive (popup) {
+  const submitButton = popup.querySelector('.form__submit-button');
+  const inputList = Array.from(popup.querySelectorAll('.form__input'));
+
+  inputList.forEach((inputElement) => {
+    if (inputElement.textContent === '') {
+      submitButton.classList.add('form__submit-button_inactive');
+      submitButton.setAttribute('disabled', true);
+    }
+  });
+}
+
 // Слушатели событий
 
-//открытие popupEdit
+//Открытие popupEdit
 profileEditButton.addEventListener('click', function() {
   openPopup(popupEdit);
   resetValidationFields(formEdit);
   fillEditPopupInput();
-  enableValidation(config);
+  //Слушатель события нажатия по кнопке Сохранить для popupEdit
+  formEdit.addEventListener('submit', submitEditPopup);
 });
 
-//закрытие popupEdit по кнопке Сохранить
-formEdit.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-  submitEditPopup();
-});
-
-//открытие popupAdd
+//Открытие popupAdd
 profileAddButton.addEventListener('click', function() {
   openPopup(popupAdd);
   resetValidationFields(formAdd);
   formAdd.reset();
-  enableValidation(config);
-});
-
-//закрытие popupAdd по кнопке Создать
-formAdd.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-  submitAddPopup();
+  toggleButtonStateInactive(popupAdd);
+  //Слушатель события нажатия по кнопке Создать для popupAdd
+  formAdd.addEventListener('submit', submitAddPopup);
 });
