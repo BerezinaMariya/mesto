@@ -6,6 +6,8 @@ const profileAddButton = document.querySelector('.profile__add-button');
 const profileName = document.querySelector('.profile__name');
 const profileAboutOneself = document.querySelector('.profile__about-oneself');
 
+const popups = document.querySelectorAll('.popup');
+
 const popupEdit = document.querySelector('.popup_action_edit');
 const formEdit = popupEdit.querySelector('.form_action_edit');
 const formInputName = popupEdit.querySelector('.form__input_data_name');
@@ -25,8 +27,6 @@ function openPopup(popupElement) {
   popupElement.classList.add('popup_opened');
   //Добавляем слушателя закрывания popup по кнопке Esc
   document.addEventListener('keydown', closePopupByEsc);
-  //Добавляем слушателя закрывания popup по крестику и overlay
-  popupElement.addEventListener('mousedown', сlosePopupByCloseButtonAndPopupOverlay);
 }
 
 //Функция закрытия popup
@@ -35,25 +35,11 @@ function closePopup() {
   popupOpened.classList.remove('popup_opened');
   //Удаляем слушателя события закрывания popup по кнопке Esc
   document.removeEventListener('keydown', closePopupByEsc);
-  //Удаляем слушателя закрывания popup по крестику и overlay
-  popupOpened.removeEventListener('mousedown', сlosePopupByCloseButtonAndPopupOverlay);
 }
 
 //Функция закрытия popup при нажатии на Esc
 function closePopupByEsc (evt) {
   if (evt.key === 'Escape') {
-    closePopup();
-  }
-}
-
-//Функция закрытия popup по нажатию на крестик или оверлей
-function сlosePopupByCloseButtonAndPopupOverlay (evt) {
-    //Закрытие по крестику
-    if (evt.target.classList.contains('popup__close-button')) {
-      closePopup();
-    }
-    //Закрытие по overlay
-  if (evt.target.classList.contains('popup_opened')) {
     closePopup();
   }
 }
@@ -65,12 +51,22 @@ function fillEditPopupInput() {
 }
 
 //Функция редактирования данных в popupEdit и закрытия по кнопке Сохранить
-function submitEditPopup(evt) {
-  evt.preventDefault();
+function submitEditPopup() {
+  //Проверяем, есть ли класс popup_opened, чтобы не было повторных срабатываний при многократном нажатии (т.к. popup закрывается с задержкой 0.5s)
+  if (popupEdit.classList.contains('popup_opened')) {
+  closePopup();
   profileName.textContent = formInputName.value;
   profileAboutOneself.textContent = formInputAboutOneself.value;
-  closePopup();
-  formEdit.removeEventListener('submit', submitEditPopup);
+  }
+}
+
+//Функция редактирования данных в popupAdd и закрытия по кнопке Создать
+function submitAddPopup() {
+  //Проверяем, есть ли класс popup_opened, чтобы не было повторных срабатываний при многократном нажатии (т.к. popup закрывается с задержкой 0.5s)
+  if (popupAdd.classList.contains('popup_opened')) {
+    renderCard (createCard (formInputTitle.value, formInputImage.value));
+    closePopup();
+  }
 }
 
 //Функция добавления слушателя кнопки like карточки
@@ -127,14 +123,6 @@ elementsInitialCards.reverse().forEach(function (element) {
   renderCard (createCard(element.name, element.link));
 });
 
-//Функция редактирования данных в popupAdd и закрытия по кнопке Создать
-function submitAddPopup(evt) {
-  evt.preventDefault();
-  renderCard (createCard (formInputTitle.value, formInputImage.value));
-  closePopup();
-  formAdd.removeEventListener('submit', submitAddPopup);
-}
-
 //Функция очистки текста ошибки и выделения поля ошибки (подчеркивание) валидации (используем при открытии popup, т.к. при невалидных полях и закрытии НЕ по submit, при следующем открывании сохраняются текст ошибки и подчеркивание красным цветом)
 function resetValidationFields (formElement) {
   const inputList = Array.from(formElement.querySelectorAll('.form__input'));
@@ -162,21 +150,46 @@ function toggleButtonStateInactive (popup) {
 
 // Слушатели событий
 
-//Открытие popupEdit
+//Добавили каждому popup в документе слушателя закрывания popup по нажатию на крестик или оверлей
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    //Проверяем, есть ли класс popup_opened, чтобы не было повторных срабатываний при многократном нажатии (т.к. popup закрывается с задержкой 0.5s)
+    if (popup.classList.contains('popup_opened')) {
+      //Закрытие по overlay
+      if (evt.target.classList.contains('popup_opened')) {
+        closePopup()
+      }
+      //Закрытие по крестику
+      if (evt.target.classList.contains('popup__close-button')) {
+        closePopup();
+      }
+    }
+  })
+})
+
+//Добавили слушателя submit для popupEdit
+formEdit.addEventListener('submit', function(evt) {
+  evt.preventDefault();
+  submitEditPopup();
+});
+
+//Добавили слушателя submit для popupAdd
+formAdd.addEventListener('submit', function(evt) {
+  evt.preventDefault();
+  submitAddPopup();
+}); 
+
+//Добавили слушателя для открытия popupEdit
 profileEditButton.addEventListener('click', function() {
   openPopup(popupEdit);
   resetValidationFields(formEdit);
   fillEditPopupInput();
-  //Слушатель события нажатия по кнопке Сохранить для popupEdit
-  formEdit.addEventListener('submit', submitEditPopup);
 });
 
-//Открытие popupAdd
+//Добавили слушателя для открытия popupAdd
 profileAddButton.addEventListener('click', function() {
   openPopup(popupAdd);
   resetValidationFields(formAdd);
   formAdd.reset();
   toggleButtonStateInactive(popupAdd);
-  //Слушатель события нажатия по кнопке Создать для popupAdd
-  formAdd.addEventListener('submit', submitAddPopup);
 });
