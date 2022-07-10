@@ -135,18 +135,28 @@ function resetValidationFields (formElement) {
   });
 }
 
-//Функция деактивации кнопки submit-button формы (чтобы при открытии popup с НЕВАЛИДНЫМИ полями кнопка была неактивна)
-function toggleButtonStateInactive (popup) {
+//Функция деактивации кнопки submit-button формы
+function toggleButtonStatInactive (submitButton) {
+  submitButton.classList.add('form__submit-button_inactive');
+  submitButton.setAttribute('disabled', true);
+}
+
+//Функция активации кнопки submit-button формы
+function toggleButtonStatActive (submitButton) {
+  submitButton.classList.remove('form__submit-button_inactive');
+  submitButton.removeAttribute('disabled');
+}
+
+//Функция проверки валидности полей input (чтобы при открытии popup с НЕВАЛИДНЫМИ полями кнопка была неактивна)
+function toggleButtonStateWhenOpenPopup (popup) {
   const submitButton = popup.querySelector('.form__submit-button');
   const inputList = Array.from(popup.querySelectorAll('.form__input'));
 
   inputList.forEach((inputElement) => {
-    if (inputElement.value === '') {
-      submitButton.classList.add('form__submit-button_inactive');
-      submitButton.setAttribute('disabled', true);
+    if (!inputElement.validity.valid) {
+      toggleButtonStatInactive (submitButton);
     } else {
-      submitButton.classList.remove('form__submit-button_inactive');
-      submitButton.removeAttribute('disabled');
+      toggleButtonStatActive (submitButton);
     }
   });
 }
@@ -187,7 +197,7 @@ profileEditButton.addEventListener('click', function() {
   openPopup(popupEdit);
   resetValidationFields(formEdit);
   fillEditPopupInput();
-  toggleButtonStateInactive(popupEdit);
+  toggleButtonStateWhenOpenPopup(popupEdit);
 });
 
 //Добавили слушателя для открытия popupAdd
@@ -195,5 +205,5 @@ profileAddButton.addEventListener('click', function() {
   openPopup(popupAdd);
   resetValidationFields(formAdd);
   formAdd.reset();
-  toggleButtonStateInactive(popupAdd);
+  toggleButtonStateWhenOpenPopup(popupAdd);
 });
