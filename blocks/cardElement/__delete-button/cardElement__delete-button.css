@@ -1,4 +1,4 @@
-.element__delete-button {
+.cardElement__delete-button {
     padding: 0;
     width: 18px;
     height: 19px;
@@ -6,7 +6,7 @@
     right: 20px;
     top: 20px;
     border: none;
-    background-image: url(../../../images/element-trash-button.svg);
+    background-image: url(../../../images/cardElement-delete-button.svg);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
@@ -14,6 +14,6 @@
     cursor: pointer;
 }
 
-.element__delete-button:hover {
+.cardElement__delete-button:hover {
     opacity: 0.6;
 }

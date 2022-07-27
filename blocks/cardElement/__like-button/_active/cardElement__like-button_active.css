@@ -1,0 +1,6 @@
+.cardElement__like-button_active {
+    opacity: 1;
+    background-image: url(../../../../images/cardElement-group-fill.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}

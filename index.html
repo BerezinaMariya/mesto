@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pages/index.css">
-    <script defer src="scripts/cards.js"></script>
-    <script defer src="scripts/validate.js"></script>
-    <script defer src="scripts/index.js"></script>
+    <script type="module" src="scripts/cards.js"></script>
+    <script type="module" src="scripts/Card.js"></script>
+    <script type="module" src="scripts/formConfig.js"></script>
+    <script type="module" src="scripts/FormValidator.js"></script>
+    <script type="module" src="scripts/index.js"></script>
     <title>Mesto</title>
   </head>
   <body class="page">
@@ -26,7 +28,7 @@
         <button type="button" class="profile__add-button" aria-label="Добавить карточку"></button>
       </section>
       <section>
-        <ul class="elements">
+        <ul class="cards">
 
         </ul>
       </section>
@@ -70,16 +72,16 @@
       </div>
     </div>
 
-    <template id="element">
-      <li class="element">
-        <img class="element__image">
-        <div class="element__caption">
-          <h2 class="element__title">
+    <template id="cardElement">
+      <li class="cardElement">
+        <img class="cardElement__image">
+        <div class="cardElement__caption">
+          <h2 class="cardElement__title">
             
           </h2>
-          <button type="button" class="element__like-button" aria-label="Нравится"></button>
+          <button type="button" class="cardElement__like-button" aria-label="Нравится"></button>
         </div>
-        <button type="button" class="element__delete-button" aria-label="Удалить"></button>
+        <button type="button" class="cardElement__delete-button" aria-label="Удалить"></button>
       </li>
     </template>
 
