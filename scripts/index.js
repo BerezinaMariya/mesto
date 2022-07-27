@@ -5,12 +5,12 @@ import { FormValidator } from './FormValidator.js';
 
 //Запускаем валидацию форм (отдельно для каждой формы)
 const addFormValidation = new FormValidator(formConfig, '.form_action_add');
-const addFormenableValidation = addFormValidation.enableValidation();
+addFormValidation.enableValidation();
 
 const editFormValidation = new FormValidator(formConfig, '.form_action_edit');
-const editFormenableValidation = editFormValidation.enableValidation();
+editFormValidation.enableValidation();
 
-//Объявляем остальные переменные
+//Объявляем переменные
 const cards = document.querySelector('.cards');
 
 const profileEditButton = document.querySelector('.profile__edit-button');
