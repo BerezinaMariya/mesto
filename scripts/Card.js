@@ -9,7 +9,7 @@ export class Card {
   }
 
   _getTemplate() {
-    const cardElement = document.querySelector(this._templateSelector).content.firstElementChild.cloneNode(true);
+    const cardElement = document.querySelector(this._templateSelector).content.querySelector('.cardElement').cloneNode(true);
 
     return cardElement;
   }
@@ -20,24 +20,25 @@ export class Card {
   }
 
   //Обработчик удаления карточки
-  _handleCardDelete(cardElement) {
-    cardElement.remove();
+  _handleCardDelete() {
+    this._element.remove();
+    this._element = null;
   }
   
-  _setEventListeners(cardElement) {
+  _setEventListeners() {
     //Слушатель открытия popupPreview картинки карточки
-    cardElement.querySelector('.cardElement__image').addEventListener('click', () => {
+    this._image.addEventListener('click', () => {
       this._handleOpenPreviewPopup(this._name, this._link);
     });
 
     //Слушатель кнопки like карточки
-    cardElement.querySelector('.cardElement__like-button').addEventListener('click', (evt) => {
+    this._element.querySelector('.cardElement__like-button').addEventListener('click', (evt) => {
       this._handleCardLike(evt);
     });
     
     //Слушатель кнопки удаления карточки
-    cardElement.querySelector('.cardElement__delete-button').addEventListener('click', () => {
-      this._handleCardDelete(cardElement);
+    this._element.querySelector('.cardElement__delete-button').addEventListener('click', () => {
+      this._handleCardDelete();
     });
   }
 
@@ -45,11 +46,11 @@ export class Card {
     this._element = this._getTemplate();
     
     this._element.querySelector('.cardElement__title').textContent = this._name;
-    const cardElementImage = this._element.querySelector('.cardElement__image');
-    cardElementImage.src = this._link;
-    cardElementImage.alt = this._name;
+    this._image = this._element.querySelector('.cardElement__image');
+    this._image.src = this._link;
+    this._image.alt = this._name;
 
-    this._setEventListeners(this._element);
+    this._setEventListeners();
 
     return this._element;
   }
