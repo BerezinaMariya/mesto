@@ -4,12 +4,6 @@ import { formConfig } from './formConfig.js';
 import { FormValidator } from './FormValidator.js';
 
 //Объявляем переменные
-
-//Из FormValidator для валидации форм (отдельно для каждой формы)
-const formAddValidation = new FormValidator(formConfig, '.form_action_add');
-const formEditValidation = new FormValidator(formConfig, '.form_action_edit');
-
-//Все остальные
 const cards = document.querySelector('.cards');
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -32,6 +26,16 @@ const formInputImageLink = popupAdd.querySelector('.form__input_data_image-url')
 const popupPreview = document.querySelector('.popup_action_image-preview');
 const popupImagePreviewTitle = popupPreview.querySelector('.popup__image-preview-title');
 const popupImagePreviewUrl = popupPreview.querySelector('.popup__image-preview-url');
+
+//Из FormValidator для валидации форм (отдельно для каждой формы)
+const formEditValidation = new FormValidator(formConfig, formEdit);
+const formAddValidation = new FormValidator(formConfig, formAdd);
+
+//Запускаем валидацию форм
+formEditValidation.enableValidation();
+formAddValidation.enableValidation();
+
+//Функции
 
 //Функция открытия popup
 function handleOpenPopup(popup) {
@@ -149,12 +153,17 @@ formAdd.addEventListener('submit', function(evt) {
 profileEditButton.addEventListener('click', function() {
   handleOpenPopup(popupEdit);
   fillEditPopupInput();
-  formEditValidation.enableValidation();
+  formEditValidation.resetValidationFields();
+  //Добавляем, чтобы после невалидного заполнения полей и закрытию НЕ по submit
+  //при следующем открытии формы кнопка стала активной снова
+  formEditValidation.toggleButtonState();
 });
 
 //Добавили слушателя для открытия popupAdd
 profileAddButton.addEventListener('click', function() {
   handleOpenPopup(popupAdd);
   formAdd.reset();
-  formAddValidation.enableValidation();
+  formAddValidation.resetValidationFields();
+  //Добавляем, чтобы при открытии формы кнопка submit была неактивной
+  formAddValidation.toggleButtonState();
 });
