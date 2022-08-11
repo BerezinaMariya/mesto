@@ -1,11 +1,11 @@
 //Создание и заполнение одной карточки, обработчики и слушатели like, удаления и открытия imagePreview этой карточки
 
 export class Card {
-  constructor(data, templateSelector, handleOpenPreviewPopup) {
+  constructor(data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
-    this._handleOpenPreviewPopup = handleOpenPreviewPopup;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -28,7 +28,7 @@ export class Card {
   _setEventListeners() {
     //Слушатель открытия popupPreview картинки карточки
     this._image.addEventListener('click', () => {
-      this._handleOpenPreviewPopup(this._name, this._link);
+      this._handleCardClick(this._name, this._link);
     });
 
     //Слушатель кнопки like карточки

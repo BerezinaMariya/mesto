@@ -1,0 +1,38 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "Проект \"Mesto\" является учебной проектной работой, в которой кратко указаны данные пользователя, а также с помощью карточек - фотографии и названия интересных для пользователя мест.  \r При создании проекта отрабатывались начальные навыки программирования на JavaScript, в проекте применены и реализованы:  \r * Адаптивная верстка, выполненная при помощи медиазапросов, делающая сайт отзывчивым.  \r * Технологии построения сеток Flex и Grid Layout.\r * Выбор DOM элементов, работа с их атрибутами, содержимым.\r * Отслеживание событий, вызванных пользователем.\r * Создание формы для получения информации от пользователя, отслеживание события отправки формы — submit.\r * Возможность редактирования данных пользователя.\r * Возможность добавления/удаления карточек.\r * Возможность просмотра выбранной фотографии в увеличенном виде.\r * Возможность отметить понравившиеся карточки.\r * Валидация заполнения полей форм.\r * Объектно-ориентированное программирование.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BerezinaMariya/mesto.git"
+  },
+  "author": "Mariya Berezina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BerezinaMariya/mesto/issues"
+  },
+  "homepage": "https://github.com/BerezinaMariya/mesto#readme",
+  "dependencies": {
+    "core-js": "^3.24.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "autoprefixer": "^10.4.8",
+    "babel-loader": "^8.2.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.1",
+    "cssnano": "^5.1.12",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "postcss-loader": "^7.0.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3"
+  }
+}
