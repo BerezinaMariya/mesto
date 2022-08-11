@@ -8,18 +8,16 @@ import {
   formInputName,
   formInputAboutOneself,
   formAdd,
-  formInputImageTitle,
-  formInputImageLink,
   popupEditSelector,
   popupAddSelector,
   popupPreviewSelector,
   cardsContainer,
   cardElementTemplate,
   userInfoInputsSelector,
-} from '../utils/constants';
+} from '../utils/constants.js';
 
-import { Card } from '../components/Card';
-import { formConfig } from '../utils/formConfig';
+import { Card } from '../components/Card.js';
+import { formConfig } from '../utils/formConfig.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
@@ -43,45 +41,45 @@ formAddValidation.enableValidation();
 
 //Функции
 
+function createCard(cardItem) {
+  const card = new Card(cardItem, cardElementTemplate, handleCardClick);
+  const cardElement = card.generateCard();
+
+  return cardElement;
+}
+
 //Создание экземпляра класса Section для исходного массива карточек initialCards
-const initialCardsList = new Section({ 
-  items: initialCards.reverse(),
-  renderer: (item) => {
-    const card = new Card(item, cardElementTemplate, handleCardClick);
-    const cardElement = card.generateCard();
-    initialCardsList.addItem(cardElement);
-  }
-}, cardsContainer);
+function getCard(cards) {
+  const cardsList = new Section({ 
+    items: cards,
+    renderer: (item) => {
+      cardsList.appendItem(createCard(item));
+    }
+  }, cardsContainer);
+
+  return cardsList;
+}
 
 //Создание и отрисовка всех карточек из исходного массива initialCards
-initialCardsList.renderItems();
+getCard(initialCards).renderItems(initialCards);
  
 //Редактирование данных в popupAdd и закрытие по кнопке Создать
-function handleSubmitAddPopup() {
-  //Создание объекта из данных полей формы form_action_add
-  const сard = {
-    name: formInputImageTitle.value,
-    link: formInputImageLink.value,
-  };
-
-  const сardList = new Section({}, cardsContainer);
-
-  const card = new Card(сard, cardElementTemplate, handleCardClick);
-  const cardElement = card.generateCard();
-  сardList.addItem(cardElement);
+function handleSubmitAddPopup(cardItem) {
+  getCard().addItem(createCard(cardItem));
 
   popupAdd.handleClosePopup();
 }
 
 //Заполнение полей формы при открытии popupEdit
 function fillEditPopupInput() {
-  formInputName.value = userInfo.getUserInfo().name;
-  formInputAboutOneself.value = userInfo.getUserInfo().aboutOneself;
+  const getUserInfo = userInfo.getUserInfo();
+  formInputName.value = getUserInfo.name;
+  formInputAboutOneself.value = getUserInfo.aboutOneself;
 }
 
 //Редактирование данных в popupEdit и закрытие по кнопке Сохранить
-function handleSubmitEditPopup() {
-  userInfo.setUserInfo();
+function handleSubmitEditPopup(user) {
+  userInfo.setUserInfo(user);
   popupEdit.handleClosePopup();
 }
 

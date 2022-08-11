@@ -7,8 +7,12 @@
       this._container = document.querySelector(containerSelector);
     }
 
-    addItem(element) {
-      this._container.prepend(element);
+    addItem(item) {
+      this._container.prepend(item);
+    }
+
+    appendItem(item) {
+      this._container.append(item);
     }
 
     renderItems() {

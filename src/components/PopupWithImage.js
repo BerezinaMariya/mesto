@@ -1,5 +1,5 @@
 import { Popup } from './Popup.js';
-import { popupPreviewTitleSelector, popupPreviewUrlSelector } from '../utils/constants.js'
+import { popupPreviewTitleSelector, popupPreviewUrlSelector } from '../utils/constants.js';
 
 export class PopupWithImage extends Popup {
   constructor(popupSelector) {
@@ -9,22 +9,10 @@ export class PopupWithImage extends Popup {
   }
 
   handleOpenPopup(imageName, imageLink) {
+    super.handleOpenPopup();
+
     this._popupWithImageTitle.textContent = imageName;
     this._popupWithImageUrl.src = imageLink;
     this._popupWithImageUrl.alt = imageName;
-
-    super.handleOpenPopup();
-  };
-
-  handleClosePopup() {
-    super.handleClosePopup();
-  }
-
-  _handleEscClose(evt) {
-    super._handleEscClose(evt);
-  }
-
-  setEventListeners() {
-      super.setEventListeners()
   }
 }

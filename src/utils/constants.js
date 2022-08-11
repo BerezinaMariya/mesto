@@ -36,8 +36,6 @@ export const formInputAboutOneself = popupActionEdit.querySelector('.form__input
   
 export const popupActionAdd = document.querySelector('.popup_action_add');
 export const formAdd = popupActionAdd.querySelector('.form_action_add');
-export const formInputImageTitle = popupActionAdd.querySelector('.form__input_data_image-title');
-export const formInputImageLink = popupActionAdd.querySelector('.form__input_data_image-url');
   
 export const popupEditSelector = '.popup_action_edit';
 export const popupAddSelector = '.popup_action_add';

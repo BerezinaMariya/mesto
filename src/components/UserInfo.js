@@ -1,22 +1,18 @@
-import { formInputName, formInputAboutOneself } from '../utils/constants.js'
-
 export default class UserInfo {
-  constructor(data) {
-    this._userName = document.querySelector(data.nameSelector);
-    this._userAboutOneself = document.querySelector(data.aboutOneselfSelector);
+  constructor(userInfoInputsSelector) {
+    this._userName = document.querySelector(userInfoInputsSelector.nameSelector);
+    this._userAboutOneself = document.querySelector(userInfoInputsSelector.aboutOneselfSelector);
   }
 
   getUserInfo() {
-    this._userInfo = {
+    return {
       name: this._userName.textContent,
       aboutOneself: this._userAboutOneself.textContent
     };
-
-    return this._userInfo;
   }
 
-  setUserInfo() {
-    this._userName.textContent = formInputName.value;
-    this._userAboutOneself.textContent = formInputAboutOneself.value;
+  setUserInfo(user) {
+    this._userName.textContent = user.name;
+    this._userAboutOneself.textContent = user.aboutOneself;
   }
 }
