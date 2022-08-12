@@ -43,29 +43,23 @@ formAddValidation.enableValidation();
 
 function createCard(cardItem) {
   const card = new Card(cardItem, cardElementTemplate, handleCardClick);
-  const cardElement = card.generateCard();
-
-  return cardElement;
+  return card.generateCard();
 }
 
-//Создание экземпляра класса Section для исходного массива карточек initialCards
-function getCard(cards) {
-  const cardsList = new Section({ 
-    items: cards,
-    renderer: (item) => {
-      cardsList.appendItem(createCard(item));
-    }
-  }, cardsContainer);
+//Создание экземпляра класса Section
+const cardsList = new Section({ 
+  items: initialCards,
+  renderer: (item) => {
+    cardsList.appendItem(createCard(item));
+  }
+}, cardsContainer);
 
-  return cardsList;
-}
-
-//Создание и отрисовка всех карточек из исходного массива initialCards
-getCard(initialCards).renderItems(initialCards);
+//Отрисовка всех карточек из исходного массива initialCards
+cardsList.renderItems();
  
 //Редактирование данных в popupAdd и закрытие по кнопке Создать
 function handleSubmitAddPopup(cardItem) {
-  getCard().addItem(createCard(cardItem));
+  cardsList.addItem(createCard(cardItem));
 
   popupAdd.handleClosePopup();
 }
@@ -107,7 +101,6 @@ profileEditButton.addEventListener('click', function() {
 //Слушатель открытия popupAdd
 profileAddButton.addEventListener('click', function() {
   popupAdd.handleOpenPopup();
-  formAdd.reset();
   formAddValidation.resetValidationFields();
   //Добавляем, чтобы при открытии формы кнопка submit была неактивной
   formAddValidation.toggleButtonState();
