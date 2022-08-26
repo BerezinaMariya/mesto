@@ -4,7 +4,7 @@ export class PopupWithConfirmation extends Popup {
   constructor(popupSelector, handleSubmitPopup) {
     super(popupSelector);
     this._handleSubmitPopup = handleSubmitPopup;
-    this._submitButton = this._popup.querySelector('.form__submit-button');
+    this._submitButton = this._popup.querySelector('.popup__submit-button');
   }
 
   handleOpenPopup(cardElement, id) {
