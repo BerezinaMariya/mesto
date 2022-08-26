@@ -1,5 +1,5 @@
-.profile__about-oneself {
-    grid-area: profile__about-oneself;
+.profile__about {
+    grid-area: profile__about;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -12,7 +12,7 @@
 }
 
 @media screen and (max-width: 767px) {
-    .profile__about-oneself {
+    .profile__about {
         font-size: 14px;
         line-height: 17px;
         text-align: center;

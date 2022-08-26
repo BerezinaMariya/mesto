@@ -1,8 +1,8 @@
  //Класс добавления элемента в разметку
  
  export default class Section {
-    constructor({ items, renderer }, containerSelector) {
-      this._renderedItems = items;
+    constructor({ renderer }, containerSelector) {
+    //  this._renderedItems = items;
       this._renderer = renderer;
       this._container = document.querySelector(containerSelector);
     }
@@ -15,8 +15,8 @@
       this._container.append(item);
     }
 
-    renderItems() {
-      this._renderedItems.forEach((item) => {
+    renderItems(items) {
+      items.forEach((item) => {
         this._renderer(item);
       });
     }

@@ -1,6 +1,5 @@
 .popup__container {
     width: 358px;
-    min-height: 259px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -13,7 +12,6 @@
 @media screen and (max-width: 767px) {
     .popup__container {
         width: 238px;
-        min-height: 272px;
         padding: 25px 22px;
     }
 }
