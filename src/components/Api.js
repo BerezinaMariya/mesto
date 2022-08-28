@@ -39,7 +39,8 @@ export class Api {
         name: user.name,
         about: user.about
       })
-    });
+    })
+    .then(this._checkResponse)
   }
 
   //Отправка отредактированного аватара
@@ -50,7 +51,8 @@ export class Api {
       body: JSON.stringify({
         avatar: user.avatar,
       })
-    });
+    })
+    .then(this._checkResponse)
   }
 
   //Отправка новой созданной карточки на сервер
@@ -63,6 +65,7 @@ export class Api {
         link: card.link
       })
     })
+    .then(this._checkResponse)
   }
 
   //Удаление карточки с сервера
@@ -76,12 +79,9 @@ export class Api {
 
   //Отправка лайка карточки
   setLike(cardId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-49/cards/${cardId}/likes`, {
+    return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: {
-        authorization: 'c8e88be4-173c-499a-97f5-515e9331d7ba',
-        'Content-Type': 'application/json'
-      }   
+      headers: this.headers
     })  
     .then(this._checkResponse)
   }
@@ -90,7 +90,7 @@ export class Api {
   deleteLike(cardId) {
     return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: this.headers,
+      headers: this.headers
     })
     .then(this._checkResponse)
   }

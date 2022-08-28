@@ -91,10 +91,11 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
 //Редактирование данных в popupAdd и закрытие по кнопке Создать
 function handleSubmitAddPopup(cardItem) {
+  popupAdd.renderLoading(true, 'Создать');
+
   api.setNewCard(cardItem)
   .then(() => {
     cardsList.addItem(createCard(cardItem));
-    popupAdd.renderLoading(true, 'Создать');
     popupAdd.handleClosePopup();
   })
   .catch((err) => {
@@ -114,10 +115,11 @@ function fillEditPopupInput() {
 
 //Редактирование данных в popupEdit и закрытие по кнопке Сохранить
 function handleSubmitEditPopup(user) {
+  popupEdit.renderLoading(true, 'Сохранить');
+
   api.setUserInfo(user)
   .then(() => {
     userInfo.setUserInfo(user);
-    popupEdit.renderLoading(true, 'Сохранить');
     popupEdit.handleClosePopup();
   })
   .catch((err) => {
@@ -130,10 +132,11 @@ function handleSubmitEditPopup(user) {
 
 //Редактирование аватара и закрытие по кнопке Сохранить
 function handleSubmitAvatarEditPopup(user) {
+  popupAvatarEdit.renderLoading(true, 'Сохранить');
+
   api.setAvatar(user)
   .then(() => {
     userInfo.setAvatar(user);
-    popupAvatarEdit.renderLoading(true, 'Сохранить');
     popupAvatarEdit.handleClosePopup();
   })
   .catch((err) => {
