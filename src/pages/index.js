@@ -94,8 +94,8 @@ function handleSubmitAddPopup(cardItem) {
   popupAdd.renderLoading(true, 'Создать');
 
   api.setNewCard(cardItem)
-  .then(() => {
-    cardsList.addItem(createCard(cardItem));
+  .then((res) => {
+    cardsList.addItem(createCard(res));
     popupAdd.handleClosePopup();
   })
   .catch((err) => {
@@ -118,8 +118,8 @@ function handleSubmitEditPopup(user) {
   popupEdit.renderLoading(true, 'Сохранить');
 
   api.setUserInfo(user)
-  .then(() => {
-    userInfo.setUserInfo(user);
+  .then((res) => {
+    userInfo.setUserInfo(res);
     popupEdit.handleClosePopup();
   })
   .catch((err) => {
@@ -135,8 +135,8 @@ function handleSubmitAvatarEditPopup(user) {
   popupAvatarEdit.renderLoading(true, 'Сохранить');
 
   api.setAvatar(user)
-  .then(() => {
-    userInfo.setAvatar(user);
+  .then((res) => {
+    userInfo.setAvatar(res);
     popupAvatarEdit.handleClosePopup();
   })
   .catch((err) => {
@@ -170,11 +170,12 @@ function handleCardClick(imageName, imageLink) {
 }
 
 //Лайк карточки
-function handleSetLike(evt, cardElement, cardId) {
+function handleSetLike(evt, cardElementLikes, cardId) {
+  
   api.setLike(cardId)
   .then((res) => {
-    card(cardElement).setLike(evt);
-    card(res).generateCard();
+    card(res).countLikes(cardElementLikes, res.likes);
+    card(res).setLike(evt);
   })
   .catch((err) => {
     alert(`${err} Карточка не лайкнулась`)
@@ -182,11 +183,11 @@ function handleSetLike(evt, cardElement, cardId) {
 }
 
 //Удаление лайка карточки
-function handleDeleteLike(evt, cardElement, cardId) {
+function handleDeleteLike(evt, cardElementLikes, cardId) {
   api.deleteLike(cardId)
   .then((res) => {
-    card(cardElement).deleteLike(evt);
-    card(res).generateCard();
+    card(res).countLikes(cardElementLikes, res.likes);
+    card(res).deleteLike(evt);
   })
   .catch((err) => {
     alert(`${err} Лайк не удалился`)

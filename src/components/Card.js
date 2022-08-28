@@ -42,9 +42,9 @@ export class Card {
    //Переключатель like карточки
   _handleToggleLike(evt) { 
     if (evt.target.classList.contains('cardElement__like-button_active')) {
-       this._handleDeleteLike(evt, this._element, this._data._id);
+      this._handleDeleteLike(evt, this._countLike, this._data._id);
     } else {
-      this._handleSetLike(evt, this._element, this._data._id);
+      this._handleSetLike(evt, this._countLike, this._data._id);
     }
   }
 
@@ -58,8 +58,9 @@ export class Card {
   }
 
   //Записываем количество лайков
-  _countLikes() {
-    this._countLike.textContent = this._likes.length;
+  countLikes(cardElementLikes, likes) {
+    cardElementLikes.textContent = likes.length;
+    
   }
 
   //Обработчик удаления карточки
@@ -96,14 +97,14 @@ export class Card {
     this._title.textContent = this._name;
     this._image.src = this._link;
     this._image.alt = this._name;
-
-    if (this._likes) {
-      this._countLikes();
-    }
  
     if (this._owner) { 
       this._hideDeleteButton();
       this._setPreLike();
+    }
+
+    if (this._likes) {
+      this.countLikes(this._countLike, this._likes);
     }
 
     this._setEventListeners();

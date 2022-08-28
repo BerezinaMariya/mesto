@@ -90,7 +90,7 @@ export class Api {
   deleteLike(cardId) {
     return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: this.headers
+      headers: this.headers,
     })
     .then(this._checkResponse)
   }
