@@ -1,7 +1,7 @@
 //Создание и заполнение одной карточки, обработчики и слушатели like, удаления и открытия imagePreview этой карточки
 
 export class Card {
-  constructor(userId, data, templateSelector, handleCardClick, handleDeleteClick, handleSetLike, handleDeleteLike) {
+  constructor(data, userId, templateSelector, handleCardClick, handleDeleteClick, handleSetLike, handleDeleteLike) {
     this._data = data; 
     this._name = data.name;
     this._link = data.link;
@@ -29,19 +29,27 @@ export class Card {
     }
   }
 
-   //Обработчик like карточки
+  //Ставим лайк
+  setLike(evt) {
+    evt.target.classList.add('cardElement__like-button_active');
+  }
+  
+  //Удаляем лайк
+  deleteLike(evt) {
+    evt.target.classList.remove('cardElement__like-button_active');
+  }
+
+   //Переключатель like карточки
   _handleToggleLike(evt) { 
     if (evt.target.classList.contains('cardElement__like-button_active')) {
-      evt.target.classList.remove('cardElement__like-button_active');
-      this._handleDeleteLike(this._element, this._data._id);
+       this._handleDeleteLike(evt, this._element, this._data._id);
     } else {
-      evt.target.classList.add('cardElement__like-button_active');
-      this._handleSetLike(this._element, this._data._id);
+      this._handleSetLike(evt, this._element, this._data._id);
     }
   }
 
-  //Делаем лайк активным, если лайкала карточку
-  setLike() {
+  //Делаем лайк активным при загрузке страницы, если ранее лайкала карточку
+  _setPreLike() {
     this._likes.forEach(item => {
       if (item._id === this._userId) {
         this._buttonLike.classList.add('cardElement__like-button_active');
@@ -50,8 +58,8 @@ export class Card {
   }
 
   //Записываем количество лайков
-  countLike(cardElement, likes) {
-    cardElement.querySelector('.cardElement__likes').textContent = likes.length;
+  _countLikes() {
+    this._countLike.textContent = this._likes.length;
   }
 
   //Обработчик удаления карточки
@@ -81,19 +89,21 @@ export class Card {
     this._element = this._getTemplate();
     this._buttonDelete = this._element.querySelector('.cardElement__delete-button');
     this._buttonLike = this._element.querySelector('.cardElement__like-button');
-    
-    this._element.querySelector('.cardElement__title').textContent = this._name;
+    this._countLike = this._element.querySelector('.cardElement__likes');
     this._image = this._element.querySelector('.cardElement__image');
+    this._title = this._element.querySelector('.cardElement__title');
+
+    this._title.textContent = this._name;
     this._image.src = this._link;
     this._image.alt = this._name;
 
     if (this._likes) {
-      this.countLike(this._element, this._likes);
+      this._countLikes();
     }
  
     if (this._owner) { 
       this._hideDeleteButton();
-      this.setLike();
+      this._setPreLike();
     }
 
     this._setEventListeners();

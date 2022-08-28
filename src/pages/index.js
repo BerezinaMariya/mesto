@@ -12,6 +12,8 @@ import {
   popupEditSelector,
   popupAddSelector,
   popupPreviewSelector,
+  popupPreviewTitleSelector,
+  popupPreviewUrlSelector,
   popupDeleteSelector,
   popupEditAvatarSelector,
   cardsContainer,
@@ -30,7 +32,7 @@ import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 
 //Объявляем переменные
-const popupPreview = new PopupWithImage(popupPreviewSelector);
+const popupPreview = new PopupWithImage(popupPreviewSelector, popupPreviewTitleSelector, popupPreviewUrlSelector);
 const popupEdit = new PopupWithForm(popupEditSelector, handleSubmitEditPopup);
 const popupAdd = new PopupWithForm(popupAddSelector, handleSubmitAddPopup);
 const popupDelete = new PopupWithConfirmation(popupDeleteSelector, handleSubmitDeletePopup);
@@ -60,7 +62,7 @@ formAvatareditValidation.enableValidation();
 
 //Экземпляр класса Card
 function card(cardItem) {
-  const card = new Card(userInfo._userId, cardItem, cardElementTemplate, handleCardClick, handleDeleteClick, handleSetLike, handleDeleteLike);
+  const card = new Card(cardItem, userInfo._userId, cardElementTemplate, handleCardClick, handleDeleteClick, handleSetLike, handleDeleteLike);
   return card;
 }
 
@@ -82,15 +84,17 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
   userInfo.setAvatar(values[0]);
   userInfo.setId(values[0]);
   cardsList.renderItems(values[1]);
+})
+.catch((err) => {
+  alert(`${err} Данные пользователя или карточки не загружены`)
 });
 
 //Редактирование данных в popupAdd и закрытие по кнопке Создать
 function handleSubmitAddPopup(cardItem) {
-  cardsList.addItem(createCard(cardItem));
-  popupAdd.renderLoading(true, 'Создать');
-
   api.setNewCard(cardItem)
   .then(() => {
+    cardsList.addItem(createCard(cardItem));
+    popupAdd.renderLoading(true, 'Создать');
     popupAdd.handleClosePopup();
   })
   .catch((err) => {
@@ -110,11 +114,10 @@ function fillEditPopupInput() {
 
 //Редактирование данных в popupEdit и закрытие по кнопке Сохранить
 function handleSubmitEditPopup(user) {
-  userInfo.setUserInfo(user);
-  popupEdit.renderLoading(true, 'Сохранить');
-
   api.setUserInfo(user)
   .then(() => {
+    userInfo.setUserInfo(user);
+    popupEdit.renderLoading(true, 'Сохранить');
     popupEdit.handleClosePopup();
   })
   .catch((err) => {
@@ -127,11 +130,10 @@ function handleSubmitEditPopup(user) {
 
 //Редактирование аватара и закрытие по кнопке Сохранить
 function handleSubmitAvatarEditPopup(user) {
-  userInfo.setAvatar(user);
-  popupAvatarEdit.renderLoading(true, 'Сохранить');
-
   api.setAvatar(user)
   .then(() => {
+    userInfo.setAvatar(user);
+    popupAvatarEdit.renderLoading(true, 'Сохранить');
     popupAvatarEdit.handleClosePopup();
   })
   .catch((err) => {
@@ -150,12 +152,13 @@ function handleDeleteClick(cardElement, id) {
 //Обработчик удаления карточки (при нажатии "Да" в popupDelete)
 function handleSubmitDeletePopup(cardElement, id) {
   api.deleteCard(id)
+  .then(() => {
+    card(cardElement).handleCardDelete(cardElement);
+    popupDelete.handleClosePopup();
+  })
   .catch((err) => {
     alert(`${err} Карточка не удалилась`)
   }); 
-
-  card(cardElement).handleCardDelete(cardElement);
-  popupDelete.handleClosePopup();
 }
 
 //Обработчик открытия popupPreview картинки карточки
@@ -163,20 +166,24 @@ function handleCardClick(imageName, imageLink) {
   popupPreview.handleOpenPopup(imageName, imageLink);
 }
 
-function handleSetLike(cardElement, cardId) {
+//Лайк карточки
+function handleSetLike(evt, cardElement, cardId) {
   api.setLike(cardId)
   .then((res) => {
-    card(cardElement).countLike(cardElement, res.likes);
+    card(cardElement).setLike(evt);
+    card(res).generateCard();
   })
   .catch((err) => {
     alert(`${err} Карточка не лайкнулась`)
   });
 }
 
-function handleDeleteLike(cardElement, cardId) {
+//Удаление лайка карточки
+function handleDeleteLike(evt, cardElement, cardId) {
   api.deleteLike(cardId)
   .then((res) => {
-    card(cardElement).countLike(cardElement, res.likes);
+    card(cardElement).deleteLike(evt);
+    card(res).generateCard();
   })
   .catch((err) => {
     alert(`${err} Лайк не удалился`)
@@ -194,6 +201,7 @@ popupAvatarEdit.setEventListeners();
 //Слушатель открытия popupAvatarEdit
 profileEditAvatarButton.addEventListener('click', function () {
   popupAvatarEdit.handleOpenPopup();
+  formAvatareditValidation.toggleButtonState();
 });
 
 //Слушатель открытия popupEdit

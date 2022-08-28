@@ -4,22 +4,22 @@ export class Api {
     this.headers = headers;
   }
 
+  //Проверка ответа от сервера
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+
+    // если ошибка, отклоняем промис
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   //Получение массива исходных карточек
   getInitialCards() {
     return fetch(`${this.baseUrl}/cards`, {
       headers: this.headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-      alert(`${err} Карточки не загружены`)
-    });
+    .then(this._checkResponse)
   }
 
   //Получение данных пользователя
@@ -27,17 +27,7 @@ export class Api {
     return fetch(`${this.baseUrl}/users/me`, {
       headers: this.headers
     })
-    .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-  
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-      alert(`${err} Информация о пользователе не получена`)
-    });
+    .then(this._checkResponse)
   }
 
   //Отправка отредактированных данных пользователя
@@ -80,7 +70,8 @@ export class Api {
     return fetch(`${this.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this.headers
-    });
+    })
+    .then(this._checkResponse)
   }
 
   //Отправка лайка карточки
@@ -92,13 +83,7 @@ export class Api {
         'Content-Type': 'application/json'
       }   
     })  
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
   }
 
   //Удаление лайка карточки
@@ -107,14 +92,7 @@ export class Api {
       method: 'DELETE',
       headers: this.headers,
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      // если ошибка, отклоняем промис
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
   }
 
 }
