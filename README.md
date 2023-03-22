@@ -10,6 +10,7 @@
 * JavaScript
 * GitHub
 * Figma
+* Node.js
 * Webpack
 ### Функциональность
 * Модули раскладки CSS Flexible Box и Grid Layout.
